@@ -12,10 +12,13 @@ export type Debt = {
 interface ILoadDataSuccess {
   type: "data/load";
 }
-
 interface IAddDebt {
   type: "debt/add";
   payload: Debt;
+}
+interface IUpdateDebt {
+  type: "debt/update";
+  payload: Debt[];
 }
 
 // export type IAppActionCreator =
@@ -30,7 +33,7 @@ interface IAddDebt {
 //   | { type: "REMOVE_BY_CHECKBOX_DEBT" }
 //   | { type: "ON_DEBT_CHANGE" };
 
-export type IAppActionCreator = ILoadDataSuccess | IAddDebt;
+export type IAppActionCreator = ILoadDataSuccess | IAddDebt | IUpdateDebt;
 
 export const INTEREST_RATE_OPTIONS = [
   { value: 2.4, label: "2,4%" },

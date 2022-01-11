@@ -17,6 +17,7 @@ type Dispatch = (action: IAppActionCreator) => void;
 export type IContext = {
   state: IDebtState;
   addDebt: (values: Debt) => void;
+  updateDebt: (values: Debt) => void;
   dispatch?: Dispatch;
 };
 
@@ -60,6 +61,7 @@ const initialState = {
 const GlobalContext = createContext<IContext>({
   state: initialState,
   addDebt: (values: Debt) => {},
+  updateDebt: (values: Debt) => {},
 });
 
 const reducer = (state: IDebtState, action: IAppActionCreator) => {
@@ -72,6 +74,14 @@ const reducer = (state: IDebtState, action: IAppActionCreator) => {
         data: {
           ...state.data,
           dataDebts: [...state.data.dataDebts, action.payload],
+        },
+      };
+    case "debt/update":
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          dataDebts: action.payload,
         },
       };
     default:
@@ -95,12 +105,25 @@ const GlobalProvider = ({ children }: IProps) => {
     });
   };
 
+  const _handleUpdateDebt = (valuesDebtUpdate: Debt) => {
+    const debtDataClone = [...state.data.dataDebts];
+    const debtIndex = debtDataClone.findIndex((debt) => debt.id === valuesDebtUpdate.id);
+    if (debtIndex >= 0) {
+      debtDataClone[debtIndex] = valuesDebtUpdate;
+    }
+    dispatch({
+      type: "debt/update",
+      payload: debtDataClone,
+    });
+  };
+
   return (
     <GlobalContext.Provider
       value={{
         state,
         dispatch,
         addDebt: _handleAddDebt,
+        updateDebt: _handleUpdateDebt,
       }}
     >
       {children}

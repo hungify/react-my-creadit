@@ -8,7 +8,7 @@ import AsyncSelect from "react-select/async";
 import { useMemo } from "react";
 
 type InterestRate = {
-  value: number;
+  value: string;
   label: string;
 };
 
@@ -32,7 +32,7 @@ function SelectField(props: SelectFieldProps) {
   const { errors, touched } = form;
   const showError = errors[name] && touched[name];
 
-  const selected = options.find((option: InterestRate) => option.label === value);
+  const selected = options.find((option: InterestRate) => option.value === value);
 
   const handleSelectOptionChange = (
     newValue: SingleValue<InterestRate>,

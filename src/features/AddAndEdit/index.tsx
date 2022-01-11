@@ -10,7 +10,7 @@ import { Debt } from "../../models/IAppState";
 function AddEditPage() {
   const {
     state: { data },
-    addDebt,
+    addDebt,updateDebt
   } = useGlobalContext();
 
   const { debtId } = useParams();
@@ -53,17 +53,13 @@ function AddEditPage() {
       const newOweMoney = toNumber(values.oweMoney!);
       values = { ...values, oweMoney: newOweMoney };
       navigate("/debt");
-      // updateDebt(values);
+      updateDebt(values);
     }
   }
 
   return (
     <FormMixedContainer>
-      <FormDebt
-        onSubmit={handleSubmit}
-        initialValues={initialValues}
-        isAddMode={isAddMode}
-      />
+      <FormDebt onSubmit={handleSubmit} initialValues={initialValues} isAddMode={isAddMode} />
     </FormMixedContainer>
   );
 }
