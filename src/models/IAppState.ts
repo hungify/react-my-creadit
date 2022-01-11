@@ -21,6 +21,23 @@ interface IUpdateDebt {
   payload: Debt[];
 }
 
+interface IDeleteDebt {
+  type: "debt/delete";
+  payload: Debt[];
+}
+
+interface ICompleteDebt {
+  type: "debt/complete";
+  payload: Debt[];
+}
+
+export type IAppActionCreator =
+  | ILoadDataSuccess
+  | IAddDebt
+  | IUpdateDebt
+  | IDeleteDebt
+  | ICompleteDebt;
+
 // export type IAppActionCreator =
 //   | { type: "LOAD_DATA_SUCCESS" }
 //   | { type: "LOAD_DATA_FAIL" }
@@ -32,13 +49,3 @@ interface IUpdateDebt {
 //   | { type: "FILTER_BY_SEARCH_DEBT" }
 //   | { type: "REMOVE_BY_CHECKBOX_DEBT" }
 //   | { type: "ON_DEBT_CHANGE" };
-
-export type IAppActionCreator = ILoadDataSuccess | IAddDebt | IUpdateDebt;
-
-export const INTEREST_RATE_OPTIONS = [
-  { value: 2.4, label: "2,4%" },
-  { value: 5, label: "5%" },
-  { value: 8, label: "8%" },
-  { value: 15, label: "15%" },
-  { value: 20, label: "20%" },
-];

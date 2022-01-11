@@ -18,6 +18,8 @@ export type IContext = {
   state: IDebtState;
   addDebt: (values: Debt) => void;
   updateDebt: (values: Debt) => void;
+  deleteDebt: (idRemove: string) => void;
+  completeDebt: (idComplete: string) => void;
   dispatch?: Dispatch;
 };
 
@@ -62,6 +64,8 @@ const GlobalContext = createContext<IContext>({
   state: initialState,
   addDebt: (values: Debt) => {},
   updateDebt: (values: Debt) => {},
+  deleteDebt: (idRemove: string) => {},
+  completeDebt: (idComplete: string) => {},
 });
 
 const reducer = (state: IDebtState, action: IAppActionCreator) => {
@@ -77,6 +81,23 @@ const reducer = (state: IDebtState, action: IAppActionCreator) => {
         },
       };
     case "debt/update":
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          dataDebts: action.payload,
+        },
+      };
+    case "debt/delete":
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          dataDebts: action.payload,
+        },
+      };
+
+    case "debt/complete":
       return {
         ...state,
         data: {
@@ -117,6 +138,26 @@ const GlobalProvider = ({ children }: IProps) => {
     });
   };
 
+  const _handleDeleteDebt = (idRemove: string) => {
+    const dataDebtsDeleted = state.data.dataDebts.filter((debt) => debt.id !== idRemove);
+    dispatch({
+      type: "debt/update",
+      payload: dataDebtsDeleted,
+    });
+  };
+
+  const _handleCompleteDebt = (idComplete: string) => {
+    const dataDebtsClone = [...state.data.dataDebts];
+    const debtIndex = dataDebtsClone.findIndex((debt) => debt.id === idComplete);
+    // const debtRemove = dataDebtsClone.splice(debtIndex, 1);
+    dataDebtsClone[debtIndex].isComplete = true;
+    // dataDebtsClone.push(debtRemove[0]);
+    dispatch({
+      type: "debt/update",
+      payload: dataDebtsClone,
+    });
+  };
+
   return (
     <GlobalContext.Provider
       value={{
@@ -124,6 +165,8 @@ const GlobalProvider = ({ children }: IProps) => {
         dispatch,
         addDebt: _handleAddDebt,
         updateDebt: _handleUpdateDebt,
+        deleteDebt: _handleDeleteDebt,
+        completeDebt: _handleCompleteDebt,
       }}
     >
       {children}
