@@ -12,12 +12,12 @@ import { Debt } from "../../models/IAppState";
 type PopupProps = {
   debt: Debt;
   onEditClick: (debt: Debt) => void;
-  onRemoveClick: (debt: Debt) => void;
+  onDeleteClick: (debt: Debt) => void;
   onCompleteClick: (debt: Debt) => void;
 };
 
 function Popup(props: PopupProps) {
-  const { debt, onEditClick, onRemoveClick, onCompleteClick } = props;
+  const { debt, onEditClick, onDeleteClick, onCompleteClick } = props;
 
   const [popoverOpen, setPopoverOpen] = useState(false);
 
@@ -29,10 +29,10 @@ function Popup(props: PopupProps) {
     if (onEditClick) onEditClick(debt);
   };
 
-  const handleRemoveClick = () => {
-    if (onRemoveClick) {
+  const handleDeleteClick = () => {
+    if (onDeleteClick) {
       toggle();
-      onRemoveClick(debt);
+      onDeleteClick(debt);
     }
   };
 
@@ -48,12 +48,7 @@ function Popup(props: PopupProps) {
       <ButtonOpen id={`Popover_${debt.id}`} type="button">
         <OpenIcon />
       </ButtonOpen>
-      <Popover
-        placement="right"
-        isOpen={popoverOpen}
-        target={`Popover_${debt.id}`}
-        toggle={toggle}
-      >
+      <Popover placement="right" isOpen={popoverOpen} target={`Popover_${debt.id}`} toggle={toggle}>
         <PopoverBodyContainer>
           <PopupInner>
             {!debt.isComplete ? (
@@ -63,7 +58,7 @@ function Popup(props: PopupProps) {
               </ButtonMixed>
             ) : null}
 
-            <ButtonMixed onClick={handleRemoveClick}>
+            <ButtonMixed onClick={handleDeleteClick}>
               <RemoveIcon />
               <span>Xoá</span>
             </ButtonMixed>

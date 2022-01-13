@@ -7,9 +7,16 @@ import Popup from "../Popup";
 type TableListProps = {
   dataDebts: Array<Debt>;
   onDebtEditClick: (debt: Debt) => void;
+  onDebtDeleteClick: (debt: Debt) => void;
+  onDebtCompleteClick: (debt: Debt) => void;
 };
 
-function TableList({ dataDebts, onDebtEditClick }: TableListProps) {
+function TableList({
+  dataDebts,
+  onDebtEditClick,
+  onDebtDeleteClick,
+  onDebtCompleteClick,
+}: TableListProps) {
   return (
     <>
       {dataDebts.length > 0 ? (
@@ -45,7 +52,7 @@ function TableList({ dataDebts, onDebtEditClick }: TableListProps) {
               (debt, index) => (
                 (index += 1),
                 (
-                  <TR key={debt.id} className={debt.isComplete ? "complete" : ""}>
+                  <TR key={debt.id} isComplete={debt.isComplete}>
                     <TD>{index}</TD>
                     <TD>{debt.name}</TD>
                     <TD>{toCurrencyVND(debt.oweMoney)}</TD>
@@ -57,8 +64,8 @@ function TableList({ dataDebts, onDebtEditClick }: TableListProps) {
                       <Popup
                         debt={debt}
                         onEditClick={onDebtEditClick}
-                        onRemoveClick={() => {}}
-                        onCompleteClick={() => {}}
+                        onDeleteClick={onDebtDeleteClick}
+                        onCompleteClick={onDebtCompleteClick}
                       />
                     </TD>
                   </TR>
@@ -129,6 +136,7 @@ const TH = styled.th`
 `;
 
 const TR = styled.tr`
+  ${({ isComplete }) => isComplete && `background-color: #f2f2f2;`}
   &:nth-child(odd) {
     background-color: #323c50;
   }

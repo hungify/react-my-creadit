@@ -2,11 +2,12 @@ import * as Yup from "yup";
 import { FastField, Form, Formik, FormikHelpers } from "formik";
 import InputField from "./Fields/InputField";
 import SelectField from "./Fields/SelectField";
-import { Debt, INTEREST_RATE_OPTIONS } from "../../models/IAppState";
+import { Debt } from "../../models/IAppState";
 import CurrencyField from "./Fields/CurrencyField";
 import DateField from "./Fields/DateField";
 import styled from "styled-components";
 import { ButtonMixin } from "../../styles/MixinStyled";
+import { INTEREST_RATE_OPTIONS } from "../../constants";
 
 type FormProps = {
   initialValues: Debt;
@@ -28,20 +29,11 @@ function FormDebt(props: FormProps) {
   });
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={onSubmit}
-    >
+    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
       {({ handleSubmit, isSubmitting, dirty }) => {
         return (
           <Form onSubmit={handleSubmit}>
-            <FastField
-              name="name"
-              component={InputField}
-              label="Người mượn"
-              type="text"
-            />
+            <FastField name="name" component={InputField} label="Người mượn" type="text" />
 
             <FastField
               name="interestRate"

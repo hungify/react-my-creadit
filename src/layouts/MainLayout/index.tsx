@@ -10,6 +10,8 @@ function Home() {
     state: {
       data: { dataDebts },
     },
+    deleteDebt,
+    completeDebt,
   } = useGlobalContext();
 
   const navigate = useNavigate();
@@ -19,11 +21,24 @@ function Home() {
     navigate(editDebtUrl);
   };
 
+  const handleDebtDeleteClick = (debt: Debt) => {
+    deleteDebt(debt.id);
+  };
+
+  const handleDebtCompleteClick = (debt: Debt) => {
+    completeDebt(debt.id);
+  };
+
   return (
     <>
       <Header onSubmit={() => {}} />
       <Navbar />
-      <TableList dataDebts={dataDebts} onDebtEditClick={handleDebtEditClick} />
+      <TableList
+        dataDebts={dataDebts}
+        onDebtEditClick={handleDebtEditClick}
+        onDebtCompleteClick={handleDebtCompleteClick}
+        onDebtDeleteClick={handleDebtDeleteClick}
+      />
     </>
   );
 }
