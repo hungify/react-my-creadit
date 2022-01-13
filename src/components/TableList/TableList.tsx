@@ -52,7 +52,7 @@ function TableList({
               (debt, index) => (
                 (index += 1),
                 (
-                  <TR key={debt.id} isComplete={debt.isComplete}>
+                  <TR key={debt.id} data-isComplete={debt.isComplete}>
                     <TD>{index}</TD>
                     <TD>{debt.name}</TD>
                     <TD>{toCurrencyVND(debt.oweMoney)}</TD>
