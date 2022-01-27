@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { toCurrencyVND } from "../../helpers/currencyConvert";
 import { formatDate } from "../../helpers/dateFormat";
 import { Debt } from "../../models/IAppState";
@@ -52,7 +52,7 @@ function TableList({
               (debt, index) => (
                 (index += 1),
                 (
-                  <TR key={debt.id} data-isComplete={debt.isComplete}>
+                  <TR key={debt.id} isComplete={debt.isComplete}>
                     <TD>{index}</TD>
                     <TD>{debt.name}</TD>
                     <TD>{toCurrencyVND(debt.oweMoney)}</TD>
@@ -136,7 +136,13 @@ const TH = styled.th`
 `;
 
 const TR = styled.tr`
-  ${({ isComplete }) => isComplete && `background-color: #f2f2f2;`}
+  ${({ isComplete }) =>
+    isComplete &&
+    css`
+      text-decoration: line-through solid red;
+      opacity: 0.3;
+    `}
+
   &:nth-child(odd) {
     background-color: #323c50;
   }
