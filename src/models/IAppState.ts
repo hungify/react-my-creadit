@@ -31,12 +31,18 @@ interface ICompleteDebt {
   payload: Debt[];
 }
 
+interface ISortListDebt {
+  type: "debt/sort";
+  payload: Debt[];
+}
+
 export type IAppActionCreator =
   | ILoadDataSuccess
   | IAddDebt
   | IUpdateDebt
   | IDeleteDebt
-  | ICompleteDebt;
+  | ICompleteDebt
+  | ISortListDebt;
 
 // export type IAppActionCreator =
 //   | { type: "LOAD_DATA_SUCCESS" }

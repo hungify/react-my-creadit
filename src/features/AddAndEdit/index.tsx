@@ -10,7 +10,8 @@ import { Debt } from "../../models/IAppState";
 function AddEditPage() {
   const {
     state: { data },
-    addDebt,updateDebt
+    addDebt,
+    updateDebt,
   } = useGlobalContext();
 
   const { debtId } = useParams();
@@ -43,7 +44,6 @@ function AddEditPage() {
       };
 
       setTimeout(() => {
-        // dispatch && dispatch({ type: "debt/add", payload: newValues });
         addDebt(newValues);
         navigate("/debt");
         setSubmitting(false);

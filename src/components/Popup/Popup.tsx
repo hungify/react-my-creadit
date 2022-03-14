@@ -1,11 +1,10 @@
-import { useState } from "react";
-import { Popover, PopoverBody } from "reactstrap";
 import {
-  PencilIcon,
-  TrashIcon,
   BadgeCheckIcon,
-  DotsHorizontalIcon,
+  DotsHorizontalIcon, PencilIcon,
+  TrashIcon
 } from "@heroicons/react/outline";
+import { useState } from "react";
+import { PopoverBody, UncontrolledPopover } from "reactstrap";
 import styled, { css } from "styled-components";
 import { Debt } from "../../models/IAppState";
 
@@ -18,7 +17,6 @@ type PopupProps = {
 
 function Popup(props: PopupProps) {
   const { debt, onEditClick, onDeleteClick, onCompleteClick } = props;
-
   const [popoverOpen, setPopoverOpen] = useState(false);
 
   const toggle = () => {
@@ -48,7 +46,13 @@ function Popup(props: PopupProps) {
       <ButtonOpen id={`Popover_${debt.id}`} type="button">
         <OpenIcon />
       </ButtonOpen>
-      <Popover placement="right" isOpen={popoverOpen} target={`Popover_${debt.id}`} toggle={toggle}>
+      <UncontrolledPopover
+        isOpen={popoverOpen}
+        target={`Popover_${debt.id}`}
+        toggle={toggle}
+        placement="right"
+        trigger="focus"
+      >
         <PopoverBodyContainer>
           <PopupInner>
             {!debt.isComplete ? (
@@ -71,7 +75,7 @@ function Popup(props: PopupProps) {
             ) : null}
           </PopupInner>
         </PopoverBodyContainer>
-      </Popover>
+      </UncontrolledPopover>
     </>
   );
 }
